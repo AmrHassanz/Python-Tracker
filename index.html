@@ -14,10 +14,10 @@
     --surface-alt:#1E2842;
     --surface-alt-2:#263255;
     --accent-a:#5EEAD4;
-    --accent-a-dim:#5EEAD422;
     --accent-b:#F5A623;
-    --accent-b-dim:#F5A62322;
     --gold:#FFD866;
+    --good:#4ADE80;
+    --bad:#F87171;
     --text:#E7ECF7;
     --muted:#8891A8;
     --border:#28324D;
@@ -38,49 +38,30 @@
   }
 
   a{color:var(--accent-a);}
-
   ::selection{background:var(--accent-a);color:#04201c;}
-
   :focus-visible{outline:2px solid var(--accent-a);outline-offset:2px;}
 
   .wrap{max-width:960px;margin:0 auto;}
 
-  /* ---------- header ---------- */
   header{margin-bottom:28px;}
   .eyebrow{
-    font-family:'JetBrains Mono',monospace;
-    font-size:12px;
-    letter-spacing:.14em;
-    color:var(--muted);
-    text-transform:uppercase;
-    margin-bottom:10px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;
+    color:var(--muted);text-transform:uppercase;margin-bottom:10px;
   }
   h1{
-    font-family:'Space Grotesk',sans-serif;
-    font-size:clamp(32px,6vw,52px);
-    font-weight:700;
-    margin:0 0 8px;
-    line-height:1;
+    font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,6vw,52px);font-weight:700;
+    margin:0 0 8px;line-height:1;
     background:linear-gradient(90deg,#fff, var(--accent-a) 65%, var(--accent-b) 130%);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-    letter-spacing:-.01em;
+    -webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-.01em;
   }
-  .sub{color:var(--muted);font-size:15px;max-width:520px;}
+  .sub{color:var(--muted);font-size:15px;max-width:560px;}
 
-  /* ---------- toolbar ---------- */
   .toolbar{
     display:flex;flex-wrap:wrap;gap:12px;align-items:center;
-    margin:24px 0 20px;
-    padding:14px 16px;
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
+    margin:24px 0 12px;padding:14px 16px;
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
   }
-  .switch{
-    display:flex;background:var(--surface-alt);border-radius:999px;padding:4px;gap:2px;
-  }
+  .switch{display:flex;background:var(--surface-alt);border-radius:999px;padding:4px;gap:2px;}
   .switch button{
     border:none;background:transparent;color:var(--muted);
     font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;
@@ -97,76 +78,49 @@
   }
   .btn:hover{background:var(--surface-alt-2);border-color:#37436b;}
   .btn.ghost{background:transparent;}
+  .btn:disabled{opacity:.5;cursor:not-allowed;}
 
-  /* ---------- head to head banner ---------- */
+  .gh-status{
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);
+    display:flex;align-items:center;gap:8px;margin-bottom:22px;padding:0 4px;
+  }
+  .gh-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:none;}
+  .gh-dot.ok{background:var(--good);}
+  .gh-dot.err{background:var(--bad);}
+  .gh-dot.busy{background:var(--gold);animation:pulse 1s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
   .h2h{
-    font-family:'Space Grotesk',sans-serif;
-    text-align:center;
-    padding:16px;
-    margin-bottom:26px;
-    border-radius:var(--radius);
-    border:1px solid var(--border);
-    background:var(--surface);
-    font-size:16px;
+    font-family:'Space Grotesk',sans-serif;text-align:center;padding:16px;margin-bottom:26px;
+    border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);font-size:16px;
   }
   .h2h b{font-weight:700;}
   .h2h .lead-a b{color:var(--accent-a);}
   .h2h .lead-b b{color:var(--accent-b);}
 
-  /* ---------- ascent tracks ---------- */
   .tracks{display:flex;flex-direction:column;gap:16px;margin-bottom:32px;}
-  .track-card{
-    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-    padding:18px 20px;
-  }
+  .track-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;}
   .track-top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
   .track-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;display:flex;align-items:center;gap:8px;}
   .dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
   .dot.a{background:var(--accent-a);}
   .dot.b{background:var(--accent-b);}
-  .track-stats{
-    display:flex;gap:18px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);
-  }
+  .track-stats{display:flex;gap:18px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);}
   .track-stats b{color:var(--text);font-size:13px;}
 
-  .track-rail{
-    position:relative;height:34px;background:var(--surface-alt);
-    border-radius:999px;overflow:visible;border:1px solid var(--border);
-  }
-  .track-fill{
-    position:absolute;top:0;left:0;height:100%;border-radius:999px;
-    transition:width .4s ease;
-  }
+  .track-rail{position:relative;height:34px;background:var(--surface-alt);border-radius:999px;overflow:visible;border:1px solid var(--border);}
+  .track-fill{position:absolute;top:0;left:0;height:100%;border-radius:999px;transition:width .4s ease;}
   .track-fill.a{background:linear-gradient(90deg,#0f766e, var(--accent-a));}
   .track-fill.b{background:linear-gradient(90deg,#92400e, var(--accent-b));}
-  .tick{
-    position:absolute;top:0;bottom:0;width:1px;background:#00000030;
-  }
+  .tick{position:absolute;top:0;bottom:0;width:1px;background:#00000030;}
   .tick.milestone{background:var(--gold);width:2px;opacity:.7;}
-  .rocket{
-    position:absolute;top:50%;transform:translate(-50%,-50%);
-    font-size:20px;transition:left .4s ease;filter:drop-shadow(0 0 6px rgba(0,0,0,.4));
-  }
-  .pct-label{
-    position:absolute;right:10px;top:50%;transform:translateY(-50%);
-    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12px;
-    color:#04201c;mix-blend-mode:normal;
-  }
+  .rocket{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:20px;transition:left .4s ease;filter:drop-shadow(0 0 6px rgba(0,0,0,.4));}
 
-  /* ---------- day grid ---------- */
-  .section-title{
-    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;
-    letter-spacing:.02em;margin:0 0 4px;
-  }
+  .section-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;letter-spacing:.02em;margin:0 0 4px;}
   .section-hint{color:var(--muted);font-size:13px;margin:0 0 14px;}
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(38px,1fr));
-    gap:6px;margin-bottom:22px;
-  }
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:6px;margin-bottom:22px;}
   .cell{
-    aspect-ratio:1;border-radius:8px;background:var(--surface-alt);
-    border:1px solid var(--border);
+    aspect-ratio:1;border-radius:8px;background:var(--surface-alt);border:1px solid var(--border);
     display:flex;align-items:center;justify-content:center;
     font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);
     cursor:pointer;position:relative;transition:.12s;
@@ -178,17 +132,12 @@
   .cell.done-b{background:var(--accent-b);color:#2a1600;font-weight:700;border-color:transparent;}
   .cell.done-both{background:linear-gradient(135deg,var(--accent-a) 50%, var(--accent-b) 50.5%);color:#04201c;font-weight:700;border-color:transparent;}
 
-  /* ---------- day detail panel ---------- */
-  .detail{
-    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-    padding:18px 20px;margin-bottom:28px;
-  }
+  .detail{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:28px;}
   .detail h3{font-family:'Space Grotesk',sans-serif;margin:0 0 12px;font-size:16px;}
   .detail .row{display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap;}
   .detail textarea{
     width:100%;min-height:70px;background:var(--surface-alt);border:1px solid var(--border);
-    border-radius:10px;color:var(--text);font-family:'Inter',sans-serif;font-size:13px;
-    padding:10px;resize:vertical;
+    border-radius:10px;color:var(--text);font-family:'Inter',sans-serif;font-size:13px;padding:10px;resize:vertical;
   }
   .status-pill{
     font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 10px;border-radius:999px;
@@ -198,18 +147,19 @@
   .status-pill.done.a{background:var(--accent-a);}
   .status-pill.done.b{background:var(--accent-b);}
 
-  /* ---------- settings ---------- */
-  .settings{
-    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-    padding:18px 20px;margin-bottom:24px;
-  }
-  .settings h3{font-family:'Space Grotesk',sans-serif;margin:0 0 14px;font-size:16px;}
+  .settings{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:24px;}
+  .settings h3{font-family:'Space Grotesk',sans-serif;margin:0 0 6px;font-size:16px;}
+  .settings .group-hint{color:var(--muted);font-size:12px;margin:0 0 14px;}
+  .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 20px;}
+  @media (max-width:640px){.settings-grid{grid-template-columns:1fr;}}
   .field{margin-bottom:12px;}
   .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;font-family:'JetBrains Mono',monospace;}
   .field input{
-    width:100%;max-width:260px;background:var(--surface-alt);border:1px solid var(--border);
+    width:100%;background:var(--surface-alt);border:1px solid var(--border);
     border-radius:8px;color:var(--text);padding:9px 10px;font-family:'Inter',sans-serif;font-size:14px;
   }
+  .field .hint{color:var(--muted);font-size:11px;margin-top:4px;}
+  .divider{height:1px;background:var(--border);margin:16px 0;}
   .hidden{display:none !important;}
 
   footer{text-align:center;color:var(--muted);font-size:12px;margin-top:40px;}
@@ -225,31 +175,64 @@
 
   <header>
     <div class="eyebrow">100 Days of Code · Python · Head-to-Head</div>
-    <h1>PYTHON</h1>
-    <p class="sub">Two ascents, one finish line. Log each day you code — whoever climbs to orbit first wins bragging rights.</p>
+    <h1>PYTHON 100 DAYS CHALLENGE</h1>
+    <p class="sub">Two ascents, one finish line. Log each day you code — whoever climbs to orbit first wins bragging rights. Progress auto-saves straight to GitHub.</p>
   </header>
 
   <div class="toolbar">
     <div class="switch" id="userSwitch"></div>
     <div class="spacer"></div>
     <button class="btn ghost" id="settingsBtn">⚙ Settings</button>
-    <button class="btn" id="syncBtn">↻ Sync</button>
-    <button class="btn" id="exportBtn">⇩ Export progress.json</button>
+    <button class="btn" id="syncBtn">↻ Pull latest</button>
+    <button class="btn" id="saveNowBtn">☁ Save to GitHub</button>
+    <button class="btn ghost" id="exportBtn">⇩ Export (backup)</button>
   </div>
+  <div class="gh-status" id="ghStatus"><span class="gh-dot" id="ghDot"></span><span id="ghStatusText">Not connected to GitHub — open Settings to configure.</span></div>
 
   <div class="settings hidden" id="settingsPanel">
-    <h3>Settings</h3>
-    <div class="field">
-      <label>Competitor A name</label>
-      <input id="nameA" type="text">
+    <h3>GitHub connection</h3>
+    <p class="group-hint">Connect this app to your repo so progress auto-saves for both of you. Each person pastes their own token — it stays only in their own browser, never in the repo.</p>
+    <div class="settings-grid">
+      <div class="field">
+        <label>Repo owner (GitHub username)</label>
+        <input id="ghOwner" type="text" placeholder="e.g. amrhassanz">
+      </div>
+      <div class="field">
+        <label>Repo name</label>
+        <input id="ghRepo" type="text" placeholder="e.g. antigravity">
+      </div>
+      <div class="field">
+        <label>Branch</label>
+        <input id="ghBranch" type="text" placeholder="main">
+      </div>
+      <div class="field">
+        <label>File path</label>
+        <input id="ghPath" type="text" placeholder="data/progress.json">
+      </div>
     </div>
     <div class="field">
-      <label>Competitor B name</label>
-      <input id="nameB" type="text">
+      <label>Your personal access token</label>
+      <input id="ghToken" type="password" placeholder="github_pat_...">
+      <div class="hint">Fine-grained token, scoped only to this repo, Contents: Read & write. Stored only in this browser's localStorage — never uploaded anywhere. See README for how to create one.</div>
     </div>
-    <div class="field">
-      <label>Total days (course length)</label>
-      <input id="totalDaysInput" type="number" min="1" max="365">
+    <button class="btn" id="saveGhConfigBtn">Save connection</button>
+    <button class="btn ghost" id="testGhBtn">🔌 Test connection</button>
+
+    <div class="divider"></div>
+    <h3>Competitors</h3>
+    <div class="settings-grid">
+      <div class="field">
+        <label>Competitor A name</label>
+        <input id="nameA" type="text">
+      </div>
+      <div class="field">
+        <label>Competitor B name</label>
+        <input id="nameB" type="text">
+      </div>
+      <div class="field">
+        <label>Total days (course length)</label>
+        <input id="totalDaysInput" type="number" min="1" max="365">
+      </div>
     </div>
     <button class="btn" id="saveSettingsBtn">Save settings</button>
   </div>
@@ -264,7 +247,7 @@
   <p class="section-hint">Click a day to view or update it for whoever's currently logging.</p>
   <div class="grid" id="grid"></div>
 
-  <footer>Progress is saved to this browser automatically. Use <b>Export</b> + a git commit to sync between devices.</footer>
+  <footer>Progress auto-saves to your browser instantly, and to GitHub a moment after each change (once connected). Use <b>Pull latest</b> any time to grab the other person's updates.</footer>
 </div>
 
 <script>
@@ -280,21 +263,62 @@ const DEFAULT_DATA = {
 let data = null;
 let currentUser = 'p1';
 let selectedDay = null;
+let settingsDirty = false;
+let saveTimer = null;
+let currentSha = null; // sha of the file as last known on GitHub
 
 const LOCAL_KEY = 'antigravity-data-v1';
+const GH_CONFIG_KEY = 'antigravity-gh-config-v1';
+const GH_TOKEN_KEY = 'antigravity-gh-token-v1'; // kept separate from config/data on purpose
+
+function getGhConfig(){
+  try{ return JSON.parse(localStorage.getItem(GH_CONFIG_KEY)) || null; }catch(e){ return null; }
+}
+function getGhToken(){
+  return localStorage.getItem(GH_TOKEN_KEY) || '';
+}
+function ghConfigured(){
+  const c = getGhConfig();
+  return !!(c && c.owner && c.repo && c.branch && c.path);
+}
+
+function b64EncodeUnicode(str){
+  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+    (match, p1) => String.fromCharCode('0x' + p1)));
+}
+function b64DecodeUnicode(str){
+  return decodeURIComponent(atob(str).split('').map(c =>
+    '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+}
+
+function setGhStatus(state, text){
+  const dot = document.getElementById('ghDot');
+  const label = document.getElementById('ghStatusText');
+  dot.className = 'gh-dot' + (state ? ' ' + state : '');
+  label.textContent = text;
+}
 
 async function loadData(){
-  // 1. try repo file (source of truth once deployed)
-  try{
-    const res = await fetch('data/progress.json?_=' + Date.now());
-    if(res.ok){
-      const remote = await res.json();
-      data = remote;
-      saveLocal();
-      render();
-      return;
+  // 1. If connected, try GitHub directly (source of truth)
+  if(ghConfigured()){
+    const c = getGhConfig();
+    try{
+      setGhStatus('busy', 'Checking GitHub...');
+      const res = await fetch(`https://raw.githubusercontent.com/${c.owner}/${c.repo}/${c.branch}/${c.path}?_=${Date.now()}`);
+      if(res.ok){
+        const remote = await res.json();
+        data = remote;
+        saveLocal();
+        setGhStatus('ok', `Connected — loaded from ${c.owner}/${c.repo}`);
+        render();
+        return;
+      } else {
+        setGhStatus('err', `Couldn't read progress.json from GitHub yet (${res.status}). Using local copy.`);
+      }
+    }catch(e){
+      setGhStatus('err', 'Network error reaching GitHub. Using local copy.');
     }
-  }catch(e){ /* fine, fall through */ }
+  }
 
   // 2. fall back to local draft
   const local = localStorage.getItem(LOCAL_KEY);
@@ -309,6 +333,122 @@ async function loadData(){
 
 function saveLocal(){
   localStorage.setItem(LOCAL_KEY, JSON.stringify(data));
+}
+
+function scheduleGithubSave(){
+  if(!ghConfigured() || !getGhToken()) return;
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => { pushToGithub(); }, 1400);
+}
+
+function mergeData(remote, local){
+  const merged = {
+    totalDays: settingsDirty ? local.totalDays : (remote.totalDays || local.totalDays),
+    competitors: settingsDirty ? local.competitors : (remote.competitors || local.competitors),
+    progress: {}
+  };
+  const ids = local.competitors.map(c => c.id);
+  ids.forEach(id => {
+    const remoteBucket = (remote.progress && remote.progress[id]) || {};
+    const localBucket = (local.progress && local.progress[id]) || {};
+    if(id === currentUser){
+      merged.progress[id] = { ...remoteBucket, ...localBucket }; // local edits win for own bucket
+    } else {
+      merged.progress[id] = { ...remoteBucket }; // trust remote for the other person's bucket
+    }
+  });
+  return merged;
+}
+
+async function fetchGithubFile(){
+  const c = getGhConfig();
+  const token = getGhToken();
+  const url = `https://api.github.com/repos/${c.owner}/${c.repo}/contents/${c.path}?ref=${encodeURIComponent(c.branch)}`;
+  const headers = { 'Accept': 'application/vnd.github+json' };
+  if(token) headers['Authorization'] = `Bearer ${token}`;
+  const res = await fetch(url, { headers });
+  if(res.status === 404){
+    return { exists:false, sha:null, json:null };
+  }
+  if(!res.ok){
+    throw new Error(`GitHub read failed (${res.status})`);
+  }
+  const body = await res.json();
+  const json = JSON.parse(b64DecodeUnicode(body.content.replace(/\n/g,'')));
+  return { exists:true, sha: body.sha, json };
+}
+
+async function pushToGithub(attempt){
+  attempt = attempt || 1;
+  if(!ghConfigured() || !getGhToken()){
+    setGhStatus('err', 'Add a token in Settings to enable auto-save.');
+    return;
+  }
+  const c = getGhConfig();
+  try{
+    setGhStatus('busy', 'Saving to GitHub...');
+    const remoteFile = await fetchGithubFile();
+    const remoteJson = remoteFile.json || DEFAULT_DATA;
+    const merged = mergeData(remoteJson, data);
+
+    data = merged; // adopt merged state locally too, so we don't lose the other person's edits
+    saveLocal();
+
+    const url = `https://api.github.com/repos/${c.owner}/${c.repo}/contents/${c.path}`;
+    const payload = {
+      message: `Update progress — ${getCompetitor(currentUser).name}, ${new Date().toISOString().slice(0,16).replace('T',' ')}`,
+      content: b64EncodeUnicode(JSON.stringify(merged, null, 2)),
+      branch: c.branch
+    };
+    if(remoteFile.exists) payload.sha = remoteFile.sha;
+
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/vnd.github+json',
+        'Authorization': `Bearer ${getGhToken()}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if(res.status === 409 && attempt < 3){
+      // sha changed underneath us (other person just saved) — refetch and retry
+      return pushToGithub(attempt + 1);
+    }
+    if(!res.ok){
+      const errBody = await res.json().catch(() => ({}));
+      throw new Error(errBody.message || `GitHub write failed (${res.status})`);
+    }
+
+    settingsDirty = false;
+    const stamp = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+    setGhStatus('ok', `Saved to GitHub ✓ (${stamp})`);
+    render();
+  }catch(e){
+    setGhStatus('err', 'Save failed: ' + e.message);
+  }
+}
+
+async function pullFromGithub(){
+  if(!ghConfigured()){
+    setGhStatus('err', 'Set up your GitHub connection in Settings first.');
+    return;
+  }
+  try{
+    setGhStatus('busy', 'Pulling latest...');
+    const remoteFile = await fetchGithubFile();
+    if(!remoteFile.exists){
+      setGhStatus('err', 'No progress.json on GitHub yet — click "Save to GitHub" to create it.');
+      return;
+    }
+    data = mergeData(remoteFile.json, data);
+    saveLocal();
+    setGhStatus('ok', 'Up to date with GitHub ✓');
+    render();
+  }catch(e){
+    setGhStatus('err', 'Pull failed: ' + e.message);
+  }
 }
 
 function getCompetitor(id){
@@ -453,7 +593,6 @@ function renderDetail(){
   const entryB = data.progress[c2.id][selectedDay] || { done:false, note:'' };
   const activeEntry = currentUser === c1.id ? entryA : entryB;
   const activeName = getCompetitor(currentUser).name;
-  const activeAccent = getCompetitor(currentUser).accent;
 
   panel.innerHTML = `
     <h3>Day ${selectedDay}${selectedDay % 20 === 0 ? ' — milestone 🏁' : ''}</h3>
@@ -479,6 +618,7 @@ function renderDetail(){
     prog[selectedDay] = existing;
     saveLocal();
     render();
+    scheduleGithubSave();
   };
   document.getElementById('closeDetailBtn').onclick = () => { selectedDay = null; render(); };
   document.getElementById('saveNoteBtn').onclick = () => {
@@ -488,6 +628,7 @@ function renderDetail(){
     prog[selectedDay] = existing;
     saveLocal();
     render();
+    scheduleGithubSave();
   };
 }
 
@@ -495,6 +636,13 @@ function renderSettingsValues(){
   document.getElementById('nameA').value = data.competitors[0].name;
   document.getElementById('nameB').value = data.competitors[1].name;
   document.getElementById('totalDaysInput').value = data.totalDays;
+
+  const c = getGhConfig() || {};
+  document.getElementById('ghOwner').value = c.owner || '';
+  document.getElementById('ghRepo').value = c.repo || '';
+  document.getElementById('ghBranch').value = c.branch || 'main';
+  document.getElementById('ghPath').value = c.path || 'data/progress.json';
+  document.getElementById('ghToken').value = getGhToken();
 }
 
 document.getElementById('settingsBtn').onclick = () => {
@@ -506,10 +654,50 @@ document.getElementById('saveSettingsBtn').onclick = () => {
   data.competitors[1].name = document.getElementById('nameB').value.trim() || 'Sister';
   const td = parseInt(document.getElementById('totalDaysInput').value, 10);
   data.totalDays = (td && td > 0) ? td : 100;
+  settingsDirty = true;
   saveLocal();
   document.getElementById('settingsPanel').classList.add('hidden');
   render();
+  scheduleGithubSave();
 };
+
+document.getElementById('saveGhConfigBtn').onclick = () => {
+  const config = {
+    owner: document.getElementById('ghOwner').value.trim(),
+    repo: document.getElementById('ghRepo').value.trim(),
+    branch: document.getElementById('ghBranch').value.trim() || 'main',
+    path: document.getElementById('ghPath').value.trim() || 'data/progress.json'
+  };
+  localStorage.setItem(GH_CONFIG_KEY, JSON.stringify(config));
+  const token = document.getElementById('ghToken').value.trim();
+  if(token) localStorage.setItem(GH_TOKEN_KEY, token);
+  setGhStatus(null, 'Connection saved. Testing...');
+  testGithubConnection();
+};
+
+document.getElementById('testGhBtn').onclick = () => {
+  const token = document.getElementById('ghToken').value.trim();
+  if(token) localStorage.setItem(GH_TOKEN_KEY, token);
+  testGithubConnection();
+};
+
+async function testGithubConnection(){
+  if(!ghConfigured()){
+    setGhStatus('err', 'Fill in owner, repo, branch and path first.');
+    return;
+  }
+  try{
+    setGhStatus('busy', 'Testing connection...');
+    const remoteFile = await fetchGithubFile();
+    if(remoteFile.exists){
+      setGhStatus('ok', 'Connected — found progress.json on GitHub ✓');
+    } else {
+      setGhStatus('ok', 'Connected — repo reachable, no progress.json yet (will be created on first save) ✓');
+    }
+  }catch(e){
+    setGhStatus('err', 'Connection failed: ' + e.message);
+  }
+}
 
 document.getElementById('exportBtn').onclick = () => {
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -521,9 +709,13 @@ document.getElementById('exportBtn').onclick = () => {
   URL.revokeObjectURL(url);
 };
 
-document.getElementById('syncBtn').onclick = () => {
-  loadData();
-};
+document.getElementById('syncBtn').onclick = () => { pullFromGithub(); };
+document.getElementById('saveNowBtn').onclick = () => { clearTimeout(saveTimer); pushToGithub(); };
+
+// gentle background refresh so the other person's saves show up without a manual pull
+setInterval(() => {
+  if(ghConfigured() && !selectedDay){ pullFromGithub(); }
+}, 60000);
 
 loadData();
 </script>
