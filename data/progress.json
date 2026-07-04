@@ -1,0 +1,25 @@
+{
+  "totalDays": 100,
+  "competitors": [
+    {
+      "id": "p1",
+      "name": "You",
+      "accent": "a"
+    },
+    {
+      "id": "p2",
+      "name": "Sister",
+      "accent": "b"
+    }
+  ],
+  "progress": {
+    "p1": {},
+    "p2": {
+      "1": {
+        "done": true,
+        "note": "",
+        "date": "2026-07-04"
+      }
+    }
+  }
+}
