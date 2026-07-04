@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antigravity — 100 Days of Code Tracker</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0D1321;
+    --surface:#171F33;
+    --surface-alt:#1E2842;
+    --surface-alt-2:#263255;
+    --accent-a:#5EEAD4;
+    --accent-a-dim:#5EEAD422;
+    --accent-b:#F5A623;
+    --accent-b-dim:#F5A62322;
+    --gold:#FFD866;
+    --text:#E7ECF7;
+    --muted:#8891A8;
+    --border:#28324D;
+    --radius:14px;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse at 15% -10%, #1A2340 0%, transparent 45%),
+      radial-gradient(ellipse at 90% 10%, #17203a 0%, transparent 40%),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    padding:32px 20px 80px;
+  }
+
+  a{color:var(--accent-a);}
+
+  ::selection{background:var(--accent-a);color:#04201c;}
+
+  :focus-visible{outline:2px solid var(--accent-a);outline-offset:2px;}
+
+  .wrap{max-width:960px;margin:0 auto;}
+
+  /* ---------- header ---------- */
+  header{margin-bottom:28px;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    color:var(--muted);
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(32px,6vw,52px);
+    font-weight:700;
+    margin:0 0 8px;
+    line-height:1;
+    background:linear-gradient(90deg,#fff, var(--accent-a) 65%, var(--accent-b) 130%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    letter-spacing:-.01em;
+  }
+  .sub{color:var(--muted);font-size:15px;max-width:520px;}
+
+  /* ---------- toolbar ---------- */
+  .toolbar{
+    display:flex;flex-wrap:wrap;gap:12px;align-items:center;
+    margin:24px 0 20px;
+    padding:14px 16px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+  }
+  .switch{
+    display:flex;background:var(--surface-alt);border-radius:999px;padding:4px;gap:2px;
+  }
+  .switch button{
+    border:none;background:transparent;color:var(--muted);
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;
+    padding:8px 16px;border-radius:999px;cursor:pointer;transition:.15s;
+  }
+  .switch button.active[data-acc="a"]{background:var(--accent-a);color:#04201c;}
+  .switch button.active[data-acc="b"]{background:var(--accent-b);color:#2a1600;}
+  .toolbar .spacer{flex:1;}
+  .btn{
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;
+    border:1px solid var(--border);background:var(--surface-alt);color:var(--text);
+    padding:9px 14px;border-radius:10px;cursor:pointer;transition:.15s;
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  .btn:hover{background:var(--surface-alt-2);border-color:#37436b;}
+  .btn.ghost{background:transparent;}
+
+  /* ---------- head to head banner ---------- */
+  .h2h{
+    font-family:'Space Grotesk',sans-serif;
+    text-align:center;
+    padding:16px;
+    margin-bottom:26px;
+    border-radius:var(--radius);
+    border:1px solid var(--border);
+    background:var(--surface);
+    font-size:16px;
+  }
+  .h2h b{font-weight:700;}
+  .h2h .lead-a b{color:var(--accent-a);}
+  .h2h .lead-b b{color:var(--accent-b);}
+
+  /* ---------- ascent tracks ---------- */
+  .tracks{display:flex;flex-direction:column;gap:16px;margin-bottom:32px;}
+  .track-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:18px 20px;
+  }
+  .track-top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+  .track-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;display:flex;align-items:center;gap:8px;}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+  .dot.a{background:var(--accent-a);}
+  .dot.b{background:var(--accent-b);}
+  .track-stats{
+    display:flex;gap:18px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);
+  }
+  .track-stats b{color:var(--text);font-size:13px;}
+
+  .track-rail{
+    position:relative;height:34px;background:var(--surface-alt);
+    border-radius:999px;overflow:visible;border:1px solid var(--border);
+  }
+  .track-fill{
+    position:absolute;top:0;left:0;height:100%;border-radius:999px;
+    transition:width .4s ease;
+  }
+  .track-fill.a{background:linear-gradient(90deg,#0f766e, var(--accent-a));}
+  .track-fill.b{background:linear-gradient(90deg,#92400e, var(--accent-b));}
+  .tick{
+    position:absolute;top:0;bottom:0;width:1px;background:#00000030;
+  }
+  .tick.milestone{background:var(--gold);width:2px;opacity:.7;}
+  .rocket{
+    position:absolute;top:50%;transform:translate(-50%,-50%);
+    font-size:20px;transition:left .4s ease;filter:drop-shadow(0 0 6px rgba(0,0,0,.4));
+  }
+  .pct-label{
+    position:absolute;right:10px;top:50%;transform:translateY(-50%);
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12px;
+    color:#04201c;mix-blend-mode:normal;
+  }
+
+  /* ---------- day grid ---------- */
+  .section-title{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;
+    letter-spacing:.02em;margin:0 0 4px;
+  }
+  .section-hint{color:var(--muted);font-size:13px;margin:0 0 14px;}
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(38px,1fr));
+    gap:6px;margin-bottom:22px;
+  }
+  .cell{
+    aspect-ratio:1;border-radius:8px;background:var(--surface-alt);
+    border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);
+    cursor:pointer;position:relative;transition:.12s;
+  }
+  .cell:hover{border-color:var(--accent-a);transform:translateY(-1px);}
+  .cell.selected{outline:2px solid #fff;outline-offset:1px;}
+  .cell.milestone{box-shadow:inset 0 0 0 2px var(--gold);}
+  .cell.done-a{background:var(--accent-a);color:#04201c;font-weight:700;border-color:transparent;}
+  .cell.done-b{background:var(--accent-b);color:#2a1600;font-weight:700;border-color:transparent;}
+  .cell.done-both{background:linear-gradient(135deg,var(--accent-a) 50%, var(--accent-b) 50.5%);color:#04201c;font-weight:700;border-color:transparent;}
+
+  /* ---------- day detail panel ---------- */
+  .detail{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:18px 20px;margin-bottom:28px;
+  }
+  .detail h3{font-family:'Space Grotesk',sans-serif;margin:0 0 12px;font-size:16px;}
+  .detail .row{display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap;}
+  .detail textarea{
+    width:100%;min-height:70px;background:var(--surface-alt);border:1px solid var(--border);
+    border-radius:10px;color:var(--text);font-family:'Inter',sans-serif;font-size:13px;
+    padding:10px;resize:vertical;
+  }
+  .status-pill{
+    font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 10px;border-radius:999px;
+    border:1px solid var(--border);color:var(--muted);
+  }
+  .status-pill.done{color:#04201c;border-color:transparent;}
+  .status-pill.done.a{background:var(--accent-a);}
+  .status-pill.done.b{background:var(--accent-b);}
+
+  /* ---------- settings ---------- */
+  .settings{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:18px 20px;margin-bottom:24px;
+  }
+  .settings h3{font-family:'Space Grotesk',sans-serif;margin:0 0 14px;font-size:16px;}
+  .field{margin-bottom:12px;}
+  .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;font-family:'JetBrains Mono',monospace;}
+  .field input{
+    width:100%;max-width:260px;background:var(--surface-alt);border:1px solid var(--border);
+    border-radius:8px;color:var(--text);padding:9px 10px;font-family:'Inter',sans-serif;font-size:14px;
+  }
+  .hidden{display:none !important;}
+
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:40px;}
+
+  @media (max-width:640px){
+    .track-stats{gap:10px;}
+    .grid{grid-template-columns:repeat(auto-fill,minmax(30px,1fr));}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">100 Days of Code · Python · Head-to-Head</div>
+    <h1>ANTIGRAVITY</h1>
+    <p class="sub">Two ascents, one finish line. Log each day you code — whoever climbs to orbit first wins bragging rights.</p>
+  </header>
+
+  <div class="toolbar">
+    <div class="switch" id="userSwitch"></div>
+    <div class="spacer"></div>
+    <button class="btn ghost" id="settingsBtn">⚙ Settings</button>
+    <button class="btn" id="syncBtn">↻ Sync</button>
+    <button class="btn" id="exportBtn">⇩ Export progress.json</button>
+  </div>
+
+  <div class="settings hidden" id="settingsPanel">
+    <h3>Settings</h3>
+    <div class="field">
+      <label>Competitor A name</label>
+      <input id="nameA" type="text">
+    </div>
+    <div class="field">
+      <label>Competitor B name</label>
+      <input id="nameB" type="text">
+    </div>
+    <div class="field">
+      <label>Total days (course length)</label>
+      <input id="totalDaysInput" type="number" min="1" max="365">
+    </div>
+    <button class="btn" id="saveSettingsBtn">Save settings</button>
+  </div>
+
+  <div class="h2h" id="h2h"></div>
+
+  <div class="tracks" id="tracks"></div>
+
+  <div class="detail hidden" id="detailPanel"></div>
+
+  <p class="section-title">Mission Log</p>
+  <p class="section-hint">Click a day to view or update it for whoever's currently logging.</p>
+  <div class="grid" id="grid"></div>
+
+  <footer>Progress is saved to this browser automatically. Use <b>Export</b> + a git commit to sync between devices.</footer>
+</div>
+
+<script>
+const DEFAULT_DATA = {
+  totalDays: 100,
+  competitors: [
+    { id:'p1', name:'You', accent:'a' },
+    { id:'p2', name:'Sister', accent:'b' }
+  ],
+  progress: { p1:{}, p2:{} }
+};
+
+let data = null;
+let currentUser = 'p1';
+let selectedDay = null;
+
+const LOCAL_KEY = 'antigravity-data-v1';
+
+async function loadData(){
+  // 1. try repo file (source of truth once deployed)
+  try{
+    const res = await fetch('data/progress.json?_=' + Date.now());
+    if(res.ok){
+      const remote = await res.json();
+      data = remote;
+      saveLocal();
+      render();
+      return;
+    }
+  }catch(e){ /* fine, fall through */ }
+
+  // 2. fall back to local draft
+  const local = localStorage.getItem(LOCAL_KEY);
+  if(local){
+    try{ data = JSON.parse(local); render(); return; }catch(e){}
+  }
+
+  // 3. fall back to defaults
+  data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  render();
+}
+
+function saveLocal(){
+  localStorage.setItem(LOCAL_KEY, JSON.stringify(data));
+}
+
+function getCompetitor(id){
+  return data.competitors.find(c => c.id === id);
+}
+
+function computeStats(id){
+  const prog = data.progress[id] || {};
+  const doneDays = Object.keys(prog)
+    .filter(d => prog[d] && prog[d].done)
+    .map(Number)
+    .sort((a,b) => a-b);
+
+  const completed = doneDays.length;
+  const percent = data.totalDays ? Math.round((completed / data.totalDays) * 100) : 0;
+
+  let longest = 0, currentStreak = 0;
+  if(doneDays.length){
+    let runStart = doneDays[0];
+    let prev = doneDays[0];
+    const runs = [];
+    for(let i=1;i<doneDays.length;i++){
+      const d = doneDays[i];
+      if(d !== prev + 1){
+        runs.push([runStart, prev]);
+        runStart = d;
+      }
+      prev = d;
+    }
+    runs.push([runStart, prev]);
+    runs.forEach(r => { const len = r[1]-r[0]+1; if(len > longest) longest = len; });
+    const lastRun = runs[runs.length-1];
+    currentStreak = lastRun[1] - lastRun[0] + 1;
+  }
+
+  const lastDay = doneDays.length ? Math.max(...doneDays) : 0;
+  return { completed, percent, longest, currentStreak, lastDay };
+}
+
+function render(){
+  renderSwitch();
+  renderH2H();
+  renderTracks();
+  renderGrid();
+  renderDetail();
+  renderSettingsValues();
+}
+
+function renderSwitch(){
+  const el = document.getElementById('userSwitch');
+  el.innerHTML = '';
+  data.competitors.forEach(c => {
+    const btn = document.createElement('button');
+    btn.textContent = 'Logging as: ' + c.name;
+    btn.dataset.acc = c.accent;
+    if(c.id === currentUser) btn.classList.add('active');
+    btn.onclick = () => { currentUser = c.id; render(); };
+    el.appendChild(btn);
+  });
+}
+
+function renderH2H(){
+  const el = document.getElementById('h2h');
+  const [c1, c2] = data.competitors;
+  const s1 = computeStats(c1.id), s2 = computeStats(c2.id);
+  if(s1.completed === s2.completed){
+    el.innerHTML = s1.completed === 0
+      ? `Nobody's logged a day yet — first one to Day 1 sets the pace.`
+      : `Dead even at <b>${s1.completed}</b> days each. 🔥`;
+    return;
+  }
+  const leader = s1.completed > s2.completed ? c1 : c2;
+  const trailer = s1.completed > s2.completed ? c2 : c1;
+  const leaderStats = s1.completed > s2.completed ? s1 : s2;
+  const diff = Math.abs(s1.completed - s2.completed);
+  el.innerHTML = `<span class="lead-${leader.accent}"><b>${leader.name}</b></span> leads by <b>${diff}</b> day${diff===1?'':'s'} (${leaderStats.completed}/${data.totalDays}) — ${trailer.name}, time to catch up.`;
+}
+
+function renderTracks(){
+  const el = document.getElementById('tracks');
+  el.innerHTML = '';
+  data.competitors.forEach(c => {
+    const s = computeStats(c.id);
+    const card = document.createElement('div');
+    card.className = 'track-card';
+
+    let ticks = '';
+    for(let d = 10; d < data.totalDays; d += 10){
+      const pos = (d / data.totalDays) * 100;
+      const isMilestone = d % 20 === 0;
+      ticks += `<div class="tick${isMilestone ? ' milestone' : ''}" style="left:${pos}%"></div>`;
+    }
+
+    card.innerHTML = `
+      <div class="track-top">
+        <div class="track-name"><span class="dot ${c.accent}"></span>${c.name}</div>
+        <div class="track-stats">
+          <span>DAYS <b>${s.completed}/${data.totalDays}</b></span>
+          <span>STREAK <b>${s.currentStreak}</b></span>
+          <span>BEST <b>${s.longest}</b></span>
+        </div>
+      </div>
+      <div class="track-rail">
+        <div class="track-fill ${c.accent}" style="width:${s.percent}%"></div>
+        ${ticks}
+        <div class="rocket" style="left:${s.percent}%">🚀</div>
+      </div>
+    `;
+    el.appendChild(card);
+  });
+}
+
+function renderGrid(){
+  const el = document.getElementById('grid');
+  el.innerHTML = '';
+  const [c1, c2] = data.competitors;
+  for(let d = 1; d <= data.totalDays; d++){
+    const doneA = !!(data.progress[c1.id][d] && data.progress[c1.id][d].done);
+    const doneB = !!(data.progress[c2.id][d] && data.progress[c2.id][d].done);
+    const cell = document.createElement('div');
+    let cls = 'cell';
+    if(doneA && doneB) cls += ' done-both';
+    else if(doneA) cls += ' done-a';
+    else if(doneB) cls += ' done-b';
+    if(d % 20 === 0) cls += ' milestone';
+    if(d === selectedDay) cls += ' selected';
+    cell.className = cls;
+    cell.textContent = d;
+    cell.title = `Day ${d}`;
+    cell.onclick = () => { selectedDay = d; render(); };
+    el.appendChild(cell);
+  }
+}
+
+function renderDetail(){
+  const panel = document.getElementById('detailPanel');
+  if(!selectedDay){ panel.classList.add('hidden'); return; }
+  panel.classList.remove('hidden');
+
+  const [c1, c2] = data.competitors;
+  const entryA = data.progress[c1.id][selectedDay] || { done:false, note:'' };
+  const entryB = data.progress[c2.id][selectedDay] || { done:false, note:'' };
+  const activeEntry = currentUser === c1.id ? entryA : entryB;
+  const activeName = getCompetitor(currentUser).name;
+  const activeAccent = getCompetitor(currentUser).accent;
+
+  panel.innerHTML = `
+    <h3>Day ${selectedDay}${selectedDay % 20 === 0 ? ' — milestone 🏁' : ''}</h3>
+    <div class="row">
+      <span class="status-pill ${entryA.done ? 'done a' : ''}">${c1.name}: ${entryA.done ? 'done' : 'not yet'}</span>
+      <span class="status-pill ${entryB.done ? 'done b' : ''}">${c2.name}: ${entryB.done ? 'done' : 'not yet'}</span>
+    </div>
+    <div class="row">
+      <button class="btn" id="toggleDoneBtn">${activeEntry.done ? `✓ Mark not done (${activeName})` : `Mark done for ${activeName}`}</button>
+      <button class="btn ghost" id="closeDetailBtn">Close</button>
+    </div>
+    <textarea id="noteInput" placeholder="Notes for ${activeName} — what you built, what tripped you up...">${activeEntry.note || ''}</textarea>
+    <div class="row" style="margin-top:10px;">
+      <button class="btn" id="saveNoteBtn">Save note</button>
+    </div>
+  `;
+
+  document.getElementById('toggleDoneBtn').onclick = () => {
+    const prog = data.progress[currentUser];
+    const existing = prog[selectedDay] || { done:false, note:'' };
+    existing.done = !existing.done;
+    if(existing.done && !existing.date) existing.date = new Date().toISOString().slice(0,10);
+    prog[selectedDay] = existing;
+    saveLocal();
+    render();
+  };
+  document.getElementById('closeDetailBtn').onclick = () => { selectedDay = null; render(); };
+  document.getElementById('saveNoteBtn').onclick = () => {
+    const prog = data.progress[currentUser];
+    const existing = prog[selectedDay] || { done:false, note:'' };
+    existing.note = document.getElementById('noteInput').value;
+    prog[selectedDay] = existing;
+    saveLocal();
+    render();
+  };
+}
+
+function renderSettingsValues(){
+  document.getElementById('nameA').value = data.competitors[0].name;
+  document.getElementById('nameB').value = data.competitors[1].name;
+  document.getElementById('totalDaysInput').value = data.totalDays;
+}
+
+document.getElementById('settingsBtn').onclick = () => {
+  document.getElementById('settingsPanel').classList.toggle('hidden');
+};
+
+document.getElementById('saveSettingsBtn').onclick = () => {
+  data.competitors[0].name = document.getElementById('nameA').value.trim() || 'You';
+  data.competitors[1].name = document.getElementById('nameB').value.trim() || 'Sister';
+  const td = parseInt(document.getElementById('totalDaysInput').value, 10);
+  data.totalDays = (td && td > 0) ? td : 100;
+  saveLocal();
+  document.getElementById('settingsPanel').classList.add('hidden');
+  render();
+};
+
+document.getElementById('exportBtn').onclick = () => {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'progress.json';
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+document.getElementById('syncBtn').onclick = () => {
+  loadData();
+};
+
+loadData();
+</script>
+</body>
+</html>
