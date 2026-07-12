@@ -16,7 +16,7 @@
     "p1": {
       "1": {
         "done": false,
-        "note": "",
+        "note": "# print()\n# input()\n# len(var)\n\nprint(\"Welcome to the Band Name Generator\")\ncity = input(\"What's the name of the city you grew up in?\\n\")\npet = input(\"What's your pet's name?\\n\")\nprint(f\"Your band name could be {city} {pet}\")",
         "date": "2026-07-04"
       }
     },
